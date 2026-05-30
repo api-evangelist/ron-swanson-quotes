@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ron-swanson-quotes/refs/heads/main/json-schema/ron-swanson-quotes-quote-schema.json",
+  "title": "Quote",
+  "description": "A single Ron Swanson quote represented as a plain UTF-8 string. Includes punctuation, smart quotes, and original capitalisation as delivered by the upstream corpus.",
+  "type": "string",
+  "example": "Give a man a fish and feed him for a day. Don't teach a man to fish, and feed yourself. He's a grown man. Fishing's not that hard."
+}

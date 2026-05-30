@@ -1,0 +1,386 @@
+# Spectral ruleset for the Ron Swanson Quotes API.
+#
+# Derived by analysing openapi/ron-swanson-quotes-openapi.yml. The API surface
+# is small (three GET operations under a single /quotes resource) but the
+# conventions enforced below are the dominant ones observed in the spec:
+#
+#   - Title prefix:       "Ron Swanson Quotes ..."
+#   - Operation summaries prefixed with the provider name
+#   - Versioned base path under /v2
+#   - kebab-case path segments, plural resource nouns
+#   - camelCase operationIds with verb prefixes (get/list/create/update/delete/search)
+#   - snake_case query/path parameter names
+#   - snake_case schema property names
+#   - Tags in Title Case, declared globally with descriptions
+#   - HTTPS required on servers
+#   - JSON response bodies on all 2xx and 4xx responses
+#
+# Severity is calibrated as follows:
+#   error - structural requirements that break tooling or clients
+#   warn  - important consistency rules the provider should fix
+#   info  - opinionated best practices and suggestions
+
+extends: spectral:oas
+formats:
+  - oas3
+  - oas3_1
+
+rules:
+
+  # ─────────────────────────────────────────────────────────────────────
+  # INFO / METADATA
+  # ─────────────────────────────────────────────────────────────────────
+  info-title-prefix:
+    description: info.title MUST start with "Ron Swanson Quotes".
+    message: '{{property}} should start with "Ron Swanson Quotes"'
+    severity: error
+    given: $.info.title
+    then:
+      function: pattern
+      functionOptions:
+        match: '^Ron Swanson Quotes'
+
+  info-description-required:
+    description: info.description MUST be present and at least 60 characters long.
+    severity: error
+    given: $.info
+    then:
+      - field: description
+        function: truthy
+      - field: description
+        function: length
+        functionOptions:
+          min: 60
+
+  info-version-required:
+    description: info.version MUST be present.
+    severity: error
+    given: $.info
+    then:
+      field: version
+      function: truthy
+
+  info-contact-required:
+    description: info.contact MUST be present with name, url, and email.
+    severity: warn
+    given: $.info
+    then:
+      - field: contact.name
+        function: truthy
+      - field: contact.url
+        function: truthy
+      - field: contact.email
+        function: truthy
+
+  info-license-required:
+    description: info.license MUST be present with name and url.
+    severity: warn
+    given: $.info
+    then:
+      - field: license.name
+        function: truthy
+      - field: license.url
+        function: truthy
+
+  # ─────────────────────────────────────────────────────────────────────
+  # OPENAPI VERSION
+  # ─────────────────────────────────────────────────────────────────────
+  openapi-version-3:
+    description: openapi version MUST be 3.0.x or 3.1.x.
+    severity: error
+    given: $.openapi
+    then:
+      function: pattern
+      functionOptions:
+        match: '^3\.[01]\.'
+
+  # ─────────────────────────────────────────────────────────────────────
+  # SERVERS
+  # ─────────────────────────────────────────────────────────────────────
+  servers-defined:
+    description: At least one server MUST be defined.
+    severity: error
+    given: $
+    then:
+      field: servers
+      function: truthy
+
+  servers-https-required:
+    description: Server URLs MUST use HTTPS.
+    severity: error
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: '^https://'
+
+  servers-description-required:
+    description: Each server SHOULD have a description.
+    severity: warn
+    given: $.servers[*]
+    then:
+      field: description
+      function: truthy
+
+  # ─────────────────────────────────────────────────────────────────────
+  # PATHS — NAMING CONVENTIONS
+  # ─────────────────────────────────────────────────────────────────────
+  paths-kebab-case:
+    description: Path segments MUST be lowercase kebab-case (no camelCase, snake_case, or uppercase).
+    severity: warn
+    given: $.paths.*~
+    then:
+      function: pattern
+      functionOptions:
+        match: '^(/([a-z0-9]+(-[a-z0-9]+)*|\{[a-zA-Z0-9_]+\}))+$'
+
+  paths-no-trailing-slash:
+    description: Paths MUST NOT end with a trailing slash.
+    severity: error
+    given: $.paths.*~
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: '.+/$'
+
+  paths-no-query-string:
+    description: Paths MUST NOT contain query strings.
+    severity: error
+    given: $.paths.*~
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: '\?'
+
+  paths-quotes-resource-plural:
+    description: The primary resource SHOULD remain plural ("quotes").
+    severity: warn
+    given: $.paths.*~
+    then:
+      function: pattern
+      functionOptions:
+        match: '^/(quotes|quotes/.+)$'
+
+  # ─────────────────────────────────────────────────────────────────────
+  # OPERATIONS
+  # ─────────────────────────────────────────────────────────────────────
+  operation-summary-required:
+    description: Every operation MUST have a summary.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete]
+    then:
+      field: summary
+      function: truthy
+
+  operation-description-required:
+    description: Every operation MUST have a description.
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete]
+    then:
+      field: description
+      function: truthy
+
+  operation-summary-prefix:
+    description: Operation summary MUST start with "Ron Swanson Quotes".
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].summary
+    then:
+      function: pattern
+      functionOptions:
+        match: '^Ron Swanson Quotes '
+
+  operation-operationid-required:
+    description: Every operation MUST have an operationId.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete]
+    then:
+      field: operationId
+      function: truthy
+
+  operation-operationid-camel-case:
+    description: operationId MUST be camelCase starting with a verb prefix (get|list|create|update|delete|search|patch|replace).
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].operationId
+    then:
+      function: pattern
+      functionOptions:
+        match: '^(get|list|create|update|delete|search|patch|replace|upsert|run|send|find|fetch|count|head|validate)[A-Z][a-zA-Z0-9]*$'
+
+  operation-tags-required:
+    description: Every operation MUST have at least one tag.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete]
+    then:
+      field: tags
+      function: truthy
+
+  # ─────────────────────────────────────────────────────────────────────
+  # TAGS
+  # ─────────────────────────────────────────────────────────────────────
+  tags-global-defined:
+    description: A global tags array SHOULD be defined.
+    severity: warn
+    given: $
+    then:
+      field: tags
+      function: truthy
+
+  tags-description-required:
+    description: Each global tag SHOULD have a description.
+    severity: warn
+    given: $.tags[*]
+    then:
+      field: description
+      function: truthy
+
+  tags-title-case:
+    description: Tag names SHOULD use Title Case (each word capitalised, no separators).
+    severity: info
+    given: $.tags[*].name
+    then:
+      function: pattern
+      functionOptions:
+        match: '^[A-Z][a-zA-Z0-9]*( [A-Z][a-zA-Z0-9]*)*$'
+
+  # ─────────────────────────────────────────────────────────────────────
+  # PARAMETERS
+  # ─────────────────────────────────────────────────────────────────────
+  parameter-description-required:
+    description: Every parameter MUST have a description.
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].parameters[*]
+    then:
+      field: description
+      function: truthy
+
+  parameter-schema-required:
+    description: Every parameter MUST have a schema with a type.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete].parameters[*]
+    then:
+      field: schema.type
+      function: truthy
+
+  parameter-name-snake-case:
+    description: Parameter names SHOULD use snake_case or single-word names.
+    severity: info
+    given: $.paths[*][get,post,put,patch,delete].parameters[*].name
+    then:
+      function: pattern
+      functionOptions:
+        match: '^[a-z][a-z0-9_]*$'
+
+  # ─────────────────────────────────────────────────────────────────────
+  # RESPONSES
+  # ─────────────────────────────────────────────────────────────────────
+  response-success-required:
+    description: Every operation MUST define at least one 2xx response.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete].responses
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          patternProperties:
+            '^2[0-9]{2}$':
+              type: object
+          minProperties: 1
+
+  response-rate-limit-defined:
+    description: Operations SHOULD document the 429 Too Many Requests response.
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].responses
+    then:
+      field: '429'
+      function: truthy
+
+  response-description-required:
+    description: Every response MUST have a description.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete].responses[*]
+    then:
+      field: description
+      function: truthy
+
+  response-json-content-type:
+    description: Responses SHOULD return application/json.
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].responses[*].content
+    then:
+      field: application/json
+      function: truthy
+
+  # ─────────────────────────────────────────────────────────────────────
+  # SCHEMAS — PROPERTY NAMING
+  # ─────────────────────────────────────────────────────────────────────
+  schema-property-snake-case:
+    description: Schema property names SHOULD use snake_case.
+    severity: info
+    given: $.components.schemas[*].properties.*~
+    then:
+      function: pattern
+      functionOptions:
+        match: '^[a-z][a-z0-9_]*$'
+
+  schema-top-level-description:
+    description: Each top-level schema SHOULD have a description.
+    severity: warn
+    given: $.components.schemas[*]
+    then:
+      field: description
+      function: truthy
+
+  schema-type-required:
+    description: Each top-level schema MUST have an explicit type.
+    severity: error
+    given: $.components.schemas[*]
+    then:
+      field: type
+      function: truthy
+
+  # ─────────────────────────────────────────────────────────────────────
+  # HTTP METHOD CONVENTIONS
+  # ─────────────────────────────────────────────────────────────────────
+  http-get-no-request-body:
+    description: GET operations MUST NOT define a request body.
+    severity: error
+    given: $.paths[*].get
+    then:
+      field: requestBody
+      function: falsy
+
+  http-delete-no-request-body:
+    description: DELETE operations MUST NOT define a request body.
+    severity: error
+    given: $.paths[*].delete
+    then:
+      field: requestBody
+      function: falsy
+
+  # ─────────────────────────────────────────────────────────────────────
+  # GENERAL QUALITY
+  # ─────────────────────────────────────────────────────────────────────
+  operation-microcks-extension:
+    description: Operations SHOULD declare x-microcks-operation for mock-server compatibility.
+    severity: info
+    given: $.paths[*][get,post,put,patch,delete]
+    then:
+      field: x-microcks-operation
+      function: truthy
+
+  response-examples-encouraged:
+    description: Successful JSON responses SHOULD include at least one named example.
+    severity: info
+    given: $.paths[*][get,post,put,patch,delete].responses[?(@property.match(/^2\d{2}$/))].content.application/json
+    then:
+      field: examples
+      function: truthy
+
+  schema-property-example-encouraged:
+    description: Schema properties SHOULD include an example value.
+    severity: info
+    given: $.components.schemas[*].properties[*]
+    then:
+      field: example
+      function: truthy

@@ -1,0 +1,42 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "rsq": "https://ron-swanson-quotes.herokuapp.com/v2/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Quote": "schema:Quotation",
+    "QuoteList": "rsq:QuoteList",
+    "RateLimitError": "rsq:RateLimitError",
+
+    "text": "schema:text",
+    "creator": {
+      "@id": "schema:creator",
+      "@type": "@id"
+    },
+    "character": {
+      "@id": "rsq:character",
+      "@type": "xsd:string"
+    },
+    "show": {
+      "@id": "rsq:show",
+      "@type": "xsd:string"
+    },
+
+    "error": {
+      "@id": "rsq:error_code",
+      "@type": "xsd:string"
+    },
+    "message": {
+      "@id": "schema:description",
+      "@type": "xsd:string"
+    },
+
+    "quotes": {
+      "@id": "rsq:quotes",
+      "@container": "@set",
+      "@type": "schema:Quotation"
+    }
+  }
+}

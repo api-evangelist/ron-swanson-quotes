@@ -1,0 +1,152 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: "Ron Swanson Quotes"
+  description: >-
+    Unified taxonomy for the Ron Swanson Quotes API. Covers the operational
+    dimension (one OpenAPI spec, three GET operations under a single quotes
+    resource) and the capability dimension (one Naftiko capability that
+    exposes the same surface over REST and MCP).
+  created: "2026-05-30"
+  modified: "2026-05-30"
+
+# ─────────────────────────────────────────────────────────────────────
+# OPERATIONAL DIMENSION (from OpenAPI)
+# ─────────────────────────────────────────────────────────────────────
+operational:
+
+  apis:
+    - name: "Ron Swanson Quotes API"
+      namespace: "ron-swanson-quotes"
+      version: "1.0.0"
+      baseUrl: "https://ron-swanson-quotes.herokuapp.com/v2"
+      status: "deprecated"
+      statusReason: "Upstream GitHub repo archived 2026-01-19; Heroku endpoint still live without SLA."
+
+  resources:
+    - name: "quotes"
+      api: "Ron Swanson Quotes API"
+      description: "The static corpus of Ron Swanson quotes from Parks and Recreation."
+      actions:
+        - "get"
+        - "list"
+        - "search"
+
+  actions:
+    - name: "get"
+      httpMethods: ["GET"]
+      pattern: "read"
+      description: "Retrieve a single resource (in this API, a single random quote)."
+    - name: "list"
+      httpMethods: ["GET"]
+      pattern: "read"
+      description: "Retrieve a batch of resources (N random quotes)."
+    - name: "search"
+      httpMethods: ["GET"]
+      pattern: "query"
+      description: "Case-insensitive substring search across the quote corpus."
+
+  schemas:
+    core:
+      - name: "Quote"
+        description: "A single Ron Swanson quote string."
+        properties: []
+      - name: "QuoteList"
+        description: "Ordered JSON array of Quote strings - the universal response shape for this API."
+        properties:
+          - "items (Quote)"
+    errors:
+      - name: "RateLimitError"
+        description: "Error body returned when the per-client request rate limit is exceeded."
+        properties:
+          - "error"
+          - "message"
+
+  parameters:
+    pagination: []
+    identifiers:
+      - name: "count"
+        in: "path"
+        type: "integer"
+        description: "Number of random quotes to return via /quotes/{count}."
+    filters:
+      - name: "term"
+        in: "path"
+        type: "string"
+        description: "Search term matched case-insensitively across the quote corpus."
+
+  enums: {}
+
+  authentication:
+    schemes: []
+    notes: "No authentication required. CORS is open (Access-Control-Allow-Origin: *)."
+
+  rateLimits:
+    - headers:
+        - "X-RateLimit-Limit"
+        - "X-RateLimit-Remaining"
+        - "X-RateLimit-Reset"
+      observedLimit: "Approximately 10 requests per short rolling window per client."
+      errorStatus: 429
+      errorSchema: "RateLimitError"
+
+# ─────────────────────────────────────────────────────────────────────
+# CAPABILITY DIMENSION (from Naftiko)
+# ─────────────────────────────────────────────────────────────────────
+capability:
+
+  workflows:
+    - name: "Ron Swanson Quotes — Quotes"
+      file: "capabilities/ron-swanson-quotes-quotes.yaml"
+      description: "Retrieve random or searched Ron Swanson quotes."
+      apis: ["Ron Swanson Quotes API"]
+      toolCount: 3
+      tools:
+        - "get-random-quote"
+        - "get-random-quotes"
+        - "search-quotes"
+      personas: ["Developer", "Bot Author", "Tutorial Learner"]
+      domains: ["Entertainment"]
+
+  personas:
+    - id: "developer"
+      name: "Developer"
+      description: "Developer integrating quote retrieval into a frontend, backend, or test fixture."
+      workflows: ["Ron Swanson Quotes — Quotes"]
+    - id: "bot-author"
+      name: "Bot Author"
+      description: "Author of a chatbot, voice-assistant skill, or social-media bot that needs Ron Swanson quotes on demand."
+      workflows: ["Ron Swanson Quotes — Quotes"]
+    - id: "tutorial-learner"
+      name: "Tutorial Learner"
+      description: "Beginner working through a JavaScript, Node.js, or HTTP tutorial that uses this API as a friendly no-auth target."
+      workflows: ["Ron Swanson Quotes — Quotes"]
+
+  domains:
+    - name: "Entertainment"
+      description: "Television, film, and pop-culture quote APIs."
+      resources: ["quotes"]
+      workflows: ["Ron Swanson Quotes — Quotes"]
+
+  namespaces:
+    - type: "consumed"
+      namespace: "ron-swanson-quotes-quotes"
+      baseUri: "https://ron-swanson-quotes.herokuapp.com/v2"
+    - type: "rest-exposed"
+      namespace: "ron-swanson-quotes-quotes-rest"
+      port: 8080
+    - type: "mcp-exposed"
+      namespace: "ron-swanson-quotes-quotes-mcp"
+      port: 9090
+      transport: "http"
+
+  binds: []
+
+# ─────────────────────────────────────────────────────────────────────
+# CROSS-REFERENCE
+# ─────────────────────────────────────────────────────────────────────
+crossReference:
+  - resource: "quotes"
+    operations: ["getRandomQuote", "getRandomQuotes", "searchQuotes"]
+    workflows: ["Ron Swanson Quotes — Quotes"]
+    personas: ["Developer", "Bot Author", "Tutorial Learner"]

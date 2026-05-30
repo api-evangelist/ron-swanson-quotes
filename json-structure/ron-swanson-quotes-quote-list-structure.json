@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ron-swanson-quotes/refs/heads/main/json-structure/ron-swanson-quotes-quote-list-structure.json",
+  "name": "QuoteList",
+  "description": "Ordered JSON array of Ron Swanson quote strings. Every endpoint of the Ron Swanson Quotes API returns this shape regardless of the requested count or search term. An empty array is a valid response for searches with no matches.",
+  "type": "array",
+  "items": {
+    "type": "string",
+    "description": "A single Ron Swanson quote."
+  }
+}

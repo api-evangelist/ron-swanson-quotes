@@ -1,0 +1,291 @@
+openapi: 3.0.3
+info:
+  title: Ron Swanson Quotes API
+  version: 1.0.0
+  description: >-
+    A community-built, read-only HTTP API that returns Ron Swanson quotes from
+    the NBC television series Parks and Recreation. Authored by James Wright
+    as a Node.js / TypeScript Express service hosted on Heroku. The API
+    requires no authentication, enables CORS for all origins, and returns
+    every response as a JSON array of strings. The upstream GitHub repository
+    was archived on 2026-01-19 but the public Heroku endpoint remains
+    available as of 2026-05-30.
+  contact:
+    name: James Wright
+    url: https://jamesswright.co.uk
+    email: james@jamesswright.co.uk
+  license:
+    name: Apache License 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  x-generated-from: provider-published-schema
+  x-source-url: https://ron-swanson-quotes.herokuapp.com/v2/schema
+  x-status: deprecated
+  x-status-reason: >-
+    Upstream repository archived 2026-01-19; API host remains live without an
+    SLA. Suitable for tutorials and demos, not for production use.
+servers:
+  - url: https://ron-swanson-quotes.herokuapp.com/v2
+    description: Production Heroku host
+tags:
+  - name: Quotes
+    description: >-
+      Read-only operations that return one or more Ron Swanson quotes from
+      the static quote corpus.
+paths:
+  /quotes:
+    get:
+      operationId: getRandomQuote
+      summary: Ron Swanson Quotes Get Random Quote
+      description: >-
+        Return a single random Ron Swanson quote wrapped in a one-element JSON
+        array of strings. Equivalent to calling /quotes/1.
+      tags:
+        - Quotes
+      responses:
+        '200':
+          description: A one-element array containing one random quote.
+          headers:
+            X-RateLimit-Limit:
+              description: Maximum number of requests allowed in the current rolling window.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Remaining number of requests in the current rolling window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix epoch seconds at which the rate-limit window resets.
+              schema:
+                type: integer
+            Access-Control-Allow-Origin:
+              description: Always set to "*"; CORS is open for all origins.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteList'
+              examples:
+                GetRandomQuote200Example:
+                  summary: Default getRandomQuote 200 response
+                  x-microcks-default: true
+                  value:
+                    - >-
+                      Capitalism is God's way of determining who is smart and
+                      who is poor.
+        '429':
+          description: Too Many Requests - the per-client rate limit has been exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+              examples:
+                GetRandomQuote429Example:
+                  summary: Default getRandomQuote 429 response
+                  x-microcks-default: true
+                  value:
+                    error: rate_limit_exceeded
+                    message: >-
+                      You have exceeded the request rate limit for this
+                      endpoint. Please wait until the time specified by
+                      X-RateLimit-Reset before retrying.
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /quotes/{count}:
+    get:
+      operationId: getRandomQuotes
+      summary: Ron Swanson Quotes Get Random Quotes
+      description: >-
+        Return a JSON array of `count` random Ron Swanson quotes. The service
+        does not document an upper bound on `count`; reasonable values are in
+        the low tens. Negative or non-integer values yield a single quote.
+      tags:
+        - Quotes
+      parameters:
+        - name: count
+          in: path
+          required: true
+          description: Number of random quotes to return.
+          schema:
+            type: integer
+            minimum: 1
+            example: 5
+      responses:
+        '200':
+          description: An array of `count` random quotes.
+          headers:
+            X-RateLimit-Limit:
+              description: Maximum number of requests allowed in the current rolling window.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Remaining number of requests in the current rolling window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix epoch seconds at which the rate-limit window resets.
+              schema:
+                type: integer
+            Access-Control-Allow-Origin:
+              description: Always set to "*"; CORS is open for all origins.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteList'
+              examples:
+                GetRandomQuotes200Example:
+                  summary: Default getRandomQuotes 200 response
+                  x-microcks-default: true
+                  value:
+                    - >-
+                      I don't want to paint with a broad brush here, but every
+                      single contractor in the world is a miserable,
+                      incompetent thief.
+                    - Just give me all the bacon and eggs you have.
+                    - >-
+                      Say what you want about organized religion, but those
+                      bastards knew how to construct an edifice.
+                    - Go back to the library where you belong.
+                    - We have one activity planned - not getting killed.
+        '429':
+          description: Too Many Requests - the per-client rate limit has been exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+              examples:
+                GetRandomQuotes429Example:
+                  summary: Default getRandomQuotes 429 response
+                  x-microcks-default: true
+                  value:
+                    error: rate_limit_exceeded
+                    message: >-
+                      You have exceeded the request rate limit for this
+                      endpoint. Please wait until the time specified by
+                      X-RateLimit-Reset before retrying.
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /quotes/search/{term}:
+    get:
+      operationId: searchQuotes
+      summary: Ron Swanson Quotes Search Quotes
+      description: >-
+        Return every Ron Swanson quote whose text contains the URL-escaped
+        `term` substring. Matching is case-insensitive. The response is an
+        array of zero or more quote strings; an empty array is returned when
+        no quotes match.
+      tags:
+        - Quotes
+      parameters:
+        - name: term
+          in: path
+          required: true
+          description: >-
+            URL-encoded search term. Matched against the quote corpus without
+            case sensitivity. Whole-word matching is not enforced - substrings
+            also match.
+          schema:
+            type: string
+            example: bacon
+      responses:
+        '200':
+          description: An array of zero or more quotes that contain `term`.
+          headers:
+            X-RateLimit-Limit:
+              description: Maximum number of requests allowed in the current rolling window.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Remaining number of requests in the current rolling window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix epoch seconds at which the rate-limit window resets.
+              schema:
+                type: integer
+            Access-Control-Allow-Origin:
+              description: Always set to "*"; CORS is open for all origins.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteList'
+              examples:
+                SearchQuotes200Example:
+                  summary: Default searchQuotes 200 response
+                  x-microcks-default: true
+                  value:
+                    - >-
+                      Just give me all the bacon and eggs you have.
+                      Wait...wait. I worry what you just heard was: Give me a
+                      lot of bacon and eggs. What I said was: Give me all the
+                      bacon and eggs you have. Do you understand?
+        '429':
+          description: Too Many Requests - the per-client rate limit has been exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+              examples:
+                SearchQuotes429Example:
+                  summary: Default searchQuotes 429 response
+                  x-microcks-default: true
+                  value:
+                    error: rate_limit_exceeded
+                    message: >-
+                      You have exceeded the request rate limit for this
+                      endpoint. Please wait until the time specified by
+                      X-RateLimit-Reset before retrying.
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    Quote:
+      type: string
+      title: Quote
+      description: >-
+        A single Ron Swanson quote represented as a plain UTF-8 string.
+        Includes punctuation, smart quotes, and original capitalisation as
+        delivered by the upstream corpus.
+      example: >-
+        Give a man a fish and feed him for a day. Don't teach a man to fish,
+        and feed yourself. He's a grown man. Fishing's not that hard.
+    QuoteList:
+      type: array
+      title: QuoteList
+      description: >-
+        Ordered JSON array of Ron Swanson quote strings. Every endpoint of
+        this API returns this shape regardless of the requested count or
+        search term. An empty array is a valid response for searches with no
+        matches.
+      items:
+        $ref: '#/components/schemas/Quote'
+      example:
+        - Capitalism is God's way of determining who is smart and who is poor.
+        - Clear alcohols are for rich women on diets.
+    RateLimitError:
+      type: object
+      title: RateLimitError
+      description: >-
+        Error body returned when the per-client request rate limit has been
+        exceeded. Companion to the X-RateLimit-* response headers.
+      properties:
+        error:
+          type: string
+          description: Short machine-readable error code.
+          example: rate_limit_exceeded
+        message:
+          type: string
+          description: Human-readable explanation of the rate-limit condition.
+          example: >-
+            You have exceeded the request rate limit for this endpoint. Please
+            wait until the time specified by X-RateLimit-Reset before retrying.
+      required:
+        - error
+        - message

@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ron-swanson-quotes/refs/heads/main/json-structure/ron-swanson-quotes-quote-structure.json",
+  "name": "Quote",
+  "description": "A single Ron Swanson quote represented as a plain UTF-8 string. Includes punctuation, smart quotes, and original capitalisation as delivered by the upstream corpus.",
+  "type": "string"
+}

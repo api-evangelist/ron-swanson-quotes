@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ron-swanson-quotes/refs/heads/main/json-schema/ron-swanson-quotes-quote-list-schema.json",
+  "title": "QuoteList",
+  "description": "Ordered JSON array of Ron Swanson quote strings. Every endpoint of the Ron Swanson Quotes API returns this shape regardless of the requested count or search term. An empty array is a valid response for searches with no matches.",
+  "type": "array",
+  "items": {
+    "type": "string",
+    "description": "A single Ron Swanson quote.",
+    "example": "Capitalism is God's way of determining who is smart and who is poor."
+  },
+  "example": [
+    "Capitalism is God's way of determining who is smart and who is poor.",
+    "Clear alcohols are for rich women on diets."
+  ]
+}

@@ -1,32 +1,205 @@
 aid: ron-swanson-quotes
 name: Ron Swanson Quotes
-description: "Television"
-url: https://github.com/jamesseanwright/ron-swanson-quotes#ron-swanson-quotes-api
+description: >-
+  A community-built, open source HTTP API that returns Ron Swanson quotes from
+  the NBC television series Parks and Recreation. Returns one or more quotes
+  per request as a JSON array of strings, with an optional case-insensitive
+  full-text search over the quote corpus. The service is a small Node.js /
+  TypeScript Express app authored by James Wright and hosted on Heroku.
+url: https://github.com/jamesseanwright/ron-swanson-quotes
+baseURL: https://ron-swanson-quotes.herokuapp.com/v2
+humanURL: https://github.com/jamesseanwright/ron-swanson-quotes#ron-swanson-quotes-api
 specificationVersion: '0.20'
 created: '2026-05-28'
-modified: '2026-05-28'
+modified: '2026-05-30'
 x-source: public-apis/public-apis
-x-category: "Video"
+x-category: Entertainment
 x-tier: 3
 x-tier-reason: bulk-registered-from-public-apis
+x-type: opensource
+x-status: deprecated
+x-status-reason: >-
+  Upstream GitHub repository was archived by the author on 2026-01-19 due to
+  personal time constraints. The Heroku-hosted API endpoint
+  (https://ron-swanson-quotes.herokuapp.com/v2/quotes) remains alive and
+  responsive at the time of profiling (verified 2026-05-30), but no further
+  code changes will be made and the service has no formal SLA. Treat as a
+  community-maintained educational resource: useful for tutorials, learning
+  projects, and demos, but not appropriate for production dependencies.
 tags:
-  - Video
+  - Entertainment
+  - Television
+  - Parks and Recreation
+  - Quotes
+  - Open Source
   - Public APIs
+  - Node.js
+  - TypeScript
+  - Heroku
+  - REST
 apis:
-  - name: Ron Swanson Quotes
-    description: "Television"
+  - name: Ron Swanson Quotes API
+    description: >-
+      Read-only REST API returning random or searched Ron Swanson quotes as a
+      JSON array of strings. No authentication is required. CORS is enabled
+      (Access-Control-Allow-Origin is set to *) so the API can be called
+      directly from browsers. Three endpoints are exposed at the /v2/ base
+      path: GET /quotes returns a single random quote, GET /quotes/{count}
+      returns N random quotes, and GET /quotes/search/{term} returns every
+      quote that contains the given term (case-insensitive).
     humanURL: https://github.com/jamesseanwright/ron-swanson-quotes#ron-swanson-quotes-api
-    baseURL: https://github.com/jamesseanwright/ron-swanson-quotes#ron-swanson-quotes-api
+    baseURL: https://ron-swanson-quotes.herokuapp.com/v2
     tags:
-      - Video
+      - Entertainment
+      - Television
+      - Quotes
+      - REST
     properties:
       - type: Documentation
         url: https://github.com/jamesseanwright/ron-swanson-quotes#ron-swanson-quotes-api
+      - type: OpenAPI
+        url: openapi/ron-swanson-quotes-openapi.yml
+      - type: APIReference
+        url: https://ron-swanson-quotes.herokuapp.com/v2/schema
+        title: Live OpenAPI 3.0 Schema Endpoint
+      - type: JSONSchema
+        url: json-schema/ron-swanson-quotes-quote-schema.json
+        title: Quote Schema
+      - type: JSONSchema
+        url: json-schema/ron-swanson-quotes-quote-list-schema.json
+        title: QuoteList Schema
+      - type: JSONSchema
+        url: json-schema/ron-swanson-quotes-rate-limit-error-schema.json
+        title: RateLimitError Schema
+      - type: JSONStructure
+        url: json-structure/ron-swanson-quotes-quote-structure.json
+        title: Quote JSON Structure
+      - type: JSONStructure
+        url: json-structure/ron-swanson-quotes-quote-list-structure.json
+        title: QuoteList JSON Structure
+      - type: JSONStructure
+        url: json-structure/ron-swanson-quotes-rate-limit-error-structure.json
+        title: RateLimitError JSON Structure
+      - type: Example
+        url: examples/ron-swanson-quotes-quote-example.json
+        title: Quote Example
+      - type: Example
+        url: examples/ron-swanson-quotes-quote-list-example.json
+        title: QuoteList Example
+      - type: Example
+        url: examples/ron-swanson-quotes-rate-limit-error-example.json
+        title: RateLimitError Example
+      - type: NaftikoCapability
+        url: capabilities/ron-swanson-quotes-quotes.yaml
+        title: Quotes Capability
 common:
-  - type: Website
+  - type: GitHubRepository
+    url: https://github.com/jamesseanwright/ron-swanson-quotes
+  - type: Documentation
     url: https://github.com/jamesseanwright/ron-swanson-quotes#ron-swanson-quotes-api
   - type: PublicAPIsListing
     url: https://github.com/public-apis/public-apis
+  - type: ChangeLog
+    url: https://github.com/jamesseanwright/ron-swanson-quotes/blob/master/CHANGELOG.md
+  - type: Authentication
+    url: https://github.com/jamesseanwright/ron-swanson-quotes#ron-swanson-quotes-api
+    title: No Authentication Required
+  - type: RateLimits
+    url: https://github.com/jamesseanwright/ron-swanson-quotes#ron-swanson-quotes-api
+    title: Per-Client Rate Limit Headers
+    description: >-
+      The service returns standard X-RateLimit-Limit, X-RateLimit-Remaining,
+      and X-RateLimit-Reset headers on each response. Observed limit is
+      approximately 10 requests per short rolling window per client.
+  - type: SDK
+    url: https://github.com/jamesseanwright/hubot-swanson
+    title: Hubot Swanson (npm) - Chatbot Integration by Author
+  - type: CodeExamples
+    url: http://jsfiddle.net/7g2w4dhc/27/
+    title: Browser JavaScript Demo (JSFiddle)
+  - type: License
+    url: https://github.com/jamesseanwright/ron-swanson-quotes/blob/master/LICENCE
+    title: Apache License 2.0
+  - type: SpectralRules
+    url: rules/ron-swanson-quotes-rules.yml
+    title: Ron Swanson Quotes Spectral Ruleset
+  - type: JSONLD
+    url: json-ld/ron-swanson-quotes-context.jsonld
+    title: Ron Swanson Quotes JSON-LD Context
+  - type: Vocabulary
+    url: vocabulary/ron-swanson-quotes-vocabulary.yml
+    title: Ron Swanson Quotes Vocabulary
+  - type: Features
+    data:
+      - name: Random Quote
+        description: Return a single random Ron Swanson quote as a one-element JSON array.
+      - name: Batch Random Quotes
+        description: Return N random Ron Swanson quotes in a single response via /quotes/{count}.
+      - name: Full-Text Search
+        description: >-
+          Search the quote corpus for a substring with case-insensitive
+          matching via /quotes/search/{term}; returns every matching quote.
+      - name: No Authentication
+        description: Public endpoint with no API key, OAuth, or signup required.
+      - name: CORS Enabled
+        description: >-
+          Access-Control-Allow-Origin is set to * so the API can be called
+          directly from any browser-based frontend without a proxy.
+      - name: Self-Describing OpenAPI 3.0 Schema
+        description: >-
+          Live OpenAPI 3.0 specification served by the API itself at
+          GET /v2/schema, contributed by Chris Gali.
+      - name: Rate Limit Headers
+        description: >-
+          Standard X-RateLimit-Limit / X-RateLimit-Remaining / X-RateLimit-Reset
+          headers are returned on every response.
+  - type: UseCases
+    data:
+      - name: API Tutorial Fixture
+        description: >-
+          Widely used in beginner Node.js, JavaScript, and HTTP tutorials and
+          bootcamp coursework as a friendly, no-auth public API to learn fetch,
+          async/await, and JSON parsing.
+      - name: Voice Assistant Skill
+        description: >-
+          Powers Alexa skills and other voice-assistant demos that deliver a
+          Ron Swanson quote on request.
+      - name: Chatbot Integration
+        description: >-
+          Supplies the underlying quote source for Hubot, Slack, and Discord
+          bot examples (see hubot-swanson npm package by the same author).
+      - name: Frontend Demo App
+        description: >-
+          CORS-enabled endpoint makes it suitable for in-browser SPA demos
+          (React, Vue, Svelte) without requiring a backend proxy.
+      - name: API Client Library Test Target
+        description: >-
+          Stable shape and no auth make it a practical test target for
+          HTTP-client libraries and SDK generators.
+      - name: Workshop and Conference Demo
+        description: >-
+          Used in conference talks and workshops to illustrate REST,
+          OpenAPI-from-code, and API mocking concepts.
+  - type: Integrations
+    data:
+      - name: Hubot
+        description: >-
+          Official Hubot script (hubot-swanson, by the API author) that pulls
+          quotes into Hubot-powered chatops bots.
+      - name: Heroku
+        description: >-
+          Service is deployed on the Heroku platform; the production host is
+          ron-swanson-quotes.herokuapp.com.
+      - name: Alexa Skills
+        description: >-
+          Multiple community-built Amazon Alexa skills consume this API to
+          read Ron Swanson quotes on Echo devices.
+      - name: Slack and Discord Bots
+        description: Used as a quote source by various community chatbots.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+upstream:
+  - FN: James Wright
+    url: https://james.engineering
+    github: https://github.com/jamesseanwright

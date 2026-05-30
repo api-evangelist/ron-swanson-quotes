@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ron-swanson-quotes/refs/heads/main/json-structure/ron-swanson-quotes-rate-limit-error-structure.json",
+  "name": "RateLimitError",
+  "description": "Error body returned when the per-client request rate limit has been exceeded on the Ron Swanson Quotes API.",
+  "type": "object",
+  "properties": {
+    "error": {
+      "type": "string",
+      "description": "Short machine-readable error code."
+    },
+    "message": {
+      "type": "string",
+      "description": "Human-readable explanation of the rate-limit condition."
+    }
+  },
+  "required": ["error", "message"]
+}

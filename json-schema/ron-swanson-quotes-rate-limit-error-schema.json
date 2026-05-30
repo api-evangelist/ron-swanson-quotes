@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ron-swanson-quotes/refs/heads/main/json-schema/ron-swanson-quotes-rate-limit-error-schema.json",
+  "title": "RateLimitError",
+  "description": "Error body returned when the per-client request rate limit has been exceeded on the Ron Swanson Quotes API. Companion to the X-RateLimit-* response headers.",
+  "type": "object",
+  "properties": {
+    "error": {
+      "type": "string",
+      "description": "Short machine-readable error code.",
+      "example": "rate_limit_exceeded"
+    },
+    "message": {
+      "type": "string",
+      "description": "Human-readable explanation of the rate-limit condition.",
+      "example": "You have exceeded the request rate limit for this endpoint. Please wait until the time specified by X-RateLimit-Reset before retrying."
+    }
+  },
+  "required": ["error", "message"]
+}
