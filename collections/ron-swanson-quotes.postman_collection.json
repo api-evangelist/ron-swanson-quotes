@@ -1,0 +1,476 @@
+{
+  "item": [
+    {
+      "id": "f2516555-186a-4b0f-aa54-cb14aa89fe63",
+      "name": "Quotes",
+      "description": {
+        "content": "Read-only operations that return one or more Ron Swanson quotes from the static quote corpus.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "83323823-7308-49ef-ae17-b8a5bb22fa89",
+          "name": "Ron Swanson Quotes Get Random Quote",
+          "request": {
+            "name": "Ron Swanson Quotes Get Random Quote",
+            "description": {
+              "content": "Return a single random Ron Swanson quote wrapped in a one-element JSON array of strings. Equivalent to calling /quotes/1.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "quotes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5760e9ec-b5da-40c7-8b2a-c16ed782cfb7",
+              "name": "A one-element array containing one random quote.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed in the current rolling window.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "3004"
+                },
+                {
+                  "disabled": false,
+                  "description": "Remaining number of requests in the current rolling window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3004"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix epoch seconds at which the rate-limit window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "3004"
+                },
+                {
+                  "disabled": false,
+                  "description": "Always set to \"*\"; CORS is open for all origins.",
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"Capitalism is God's way of determining who is smart and who is poor.\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2298f441-eecb-4b0f-8dc7-a9f28ac8f0c8",
+              "name": "Too Many Requests - the per-client rate limit has been exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"rate_limit_exceeded\",\n  \"message\": \"You have exceeded the request rate limit for this endpoint. Please wait until the time specified by X-RateLimit-Reset before retrying.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6f2fc9bc-0623-4946-977c-70e6001cdb99",
+          "name": "Ron Swanson Quotes Get Random Quotes",
+          "request": {
+            "name": "Ron Swanson Quotes Get Random Quotes",
+            "description": {
+              "content": "Return a JSON array of `count` random Ron Swanson quotes. The service does not document an upper bound on `count`; reasonable values are in the low tens. Negative or non-integer values yield a single quote.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "quotes",
+                ":count"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "count",
+                  "description": "(Required) Number of random quotes to return."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1ed4f982-ad11-48f1-b12a-51920c71083a",
+              "name": "An array of `count` random quotes.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":count"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "count",
+                      "description": "(Required) Number of random quotes to return."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed in the current rolling window.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "3004"
+                },
+                {
+                  "disabled": false,
+                  "description": "Remaining number of requests in the current rolling window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3004"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix epoch seconds at which the rate-limit window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "3004"
+                },
+                {
+                  "disabled": false,
+                  "description": "Always set to \"*\"; CORS is open for all origins.",
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"I don't want to paint with a broad brush here, but every single contractor in the world is a miserable, incompetent thief.\",\n  \"Just give me all the bacon and eggs you have.\",\n  \"Say what you want about organized religion, but those bastards knew how to construct an edifice.\",\n  \"Go back to the library where you belong.\",\n  \"We have one activity planned - not getting killed.\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23dae29a-8549-469b-8679-8570187195f6",
+              "name": "Too Many Requests - the per-client rate limit has been exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    ":count"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "count",
+                      "description": "(Required) Number of random quotes to return."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"rate_limit_exceeded\",\n  \"message\": \"You have exceeded the request rate limit for this endpoint. Please wait until the time specified by X-RateLimit-Reset before retrying.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "63f249a9-9752-4f32-ac22-287c506bce2e",
+          "name": "Ron Swanson Quotes Search Quotes",
+          "request": {
+            "name": "Ron Swanson Quotes Search Quotes",
+            "description": {
+              "content": "Return every Ron Swanson quote whose text contains the URL-escaped `term` substring. Matching is case-insensitive. The response is an array of zero or more quote strings; an empty array is returned when no quotes match.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "quotes",
+                "search",
+                ":term"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "term",
+                  "description": "(Required) URL-encoded search term. Matched against the quote corpus without case sensitivity. Whole-word matching is not enforced - substrings also match."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4060ee23-06d2-4861-a681-20d775b2f63e",
+              "name": "An array of zero or more quotes that contain `term`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    "search",
+                    ":term"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "term",
+                      "description": "(Required) URL-encoded search term. Matched against the quote corpus without case sensitivity. Whole-word matching is not enforced - substrings also match."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed in the current rolling window.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "3004"
+                },
+                {
+                  "disabled": false,
+                  "description": "Remaining number of requests in the current rolling window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3004"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix epoch seconds at which the rate-limit window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "3004"
+                },
+                {
+                  "disabled": false,
+                  "description": "Always set to \"*\"; CORS is open for all origins.",
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"Just give me all the bacon and eggs you have. Wait...wait. I worry what you just heard was: Give me a lot of bacon and eggs. What I said was: Give me all the bacon and eggs you have. Do you understand?\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8ed4e8d-fcf9-45cc-a9e9-81c7bef58660",
+              "name": "Too Many Requests - the per-client rate limit has been exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    "search",
+                    ":term"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "term",
+                      "description": "(Required) URL-encoded search term. Matched against the quote corpus without case sensitivity. Whole-word matching is not enforced - substrings also match."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"rate_limit_exceeded\",\n  \"message\": \"You have exceeded the request rate limit for this endpoint. Please wait until the time specified by X-RateLimit-Reset before retrying.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://ron-swanson-quotes.herokuapp.com/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6d5c65ca-8e08-49ce-9605-42dd8e64ec59",
+    "name": "Ron Swanson Quotes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "A community-built, read-only HTTP API that returns Ron Swanson quotes from the NBC television series Parks and Recreation. Authored by James Wright as a Node.js / TypeScript Express service hosted on Heroku. The API requires no authentication, enables CORS for all origins, and returns every response as a JSON array of strings. The upstream GitHub repository was archived on 2026-01-19 but the public Heroku endpoint remains available as of 2026-05-30.\n\nContact Support:\n Name: James Wright\n Email: james@jamesswright.co.uk",
+      "type": "text/plain"
+    }
+  }
+}
