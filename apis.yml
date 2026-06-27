@@ -75,13 +75,13 @@ apis:
       - type: JSONStructure
         url: json-structure/ron-swanson-quotes-rate-limit-error-structure.json
         title: RateLimitError JSON Structure
-      - type: Example
+      - type: Examples
         url: examples/ron-swanson-quotes-quote-example.json
         title: Quote Example
-      - type: Example
+      - type: Examples
         url: examples/ron-swanson-quotes-quote-list-example.json
         title: QuoteList Example
-      - type: Example
+      - type: Examples
         url: examples/ron-swanson-quotes-rate-limit-error-example.json
         title: RateLimitError Example
 common:
@@ -102,7 +102,7 @@ common:
     description: >-
       The service returns standard X-RateLimit-Limit, X-RateLimit-Remaining, and X-RateLimit-Reset headers on each
       response. Observed limit is approximately 10 requests per short rolling window per client.
-  - type: SDK
+  - type: SDKs
     url: https://github.com/jamesseanwright/hubot-swanson
     title: Hubot Swanson (npm) - Chatbot Integration by Author
   - type: CodeExamples
