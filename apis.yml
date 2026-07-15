@@ -85,6 +85,8 @@ apis:
         url: examples/ron-swanson-quotes-rate-limit-error-example.json
         title: RateLimitError Example
 common:
+  - type: AgenticAccess
+    url: agentic-access/ron-swanson-quotes-agentic-access.yml
   - type: DomainSecurity
     url: security/ron-swanson-quotes-domain-security.yml
   - type: GitHubRepository
