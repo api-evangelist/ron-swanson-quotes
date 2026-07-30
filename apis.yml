@@ -1,4 +1,16 @@
 aid: ron-swanson-quotes
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ron-swanson-quotes.png
 name: Ron Swanson Quotes
 description: >-
   A community-built, open source HTTP API that returns Ron Swanson quotes from the NBC television series Parks and
@@ -35,55 +47,39 @@ tags:
   - Heroku
   - REST
 apis:
-  - name: Ron Swanson Quotes API
-    description: >-
-      Read-only REST API returning random or searched Ron Swanson quotes as a JSON array of strings. No authentication
-      is required. CORS is enabled (Access-Control-Allow-Origin is set to *) so the API can be called directly from
-      browsers. Three endpoints are exposed at the /v2/ base path: GET /quotes returns a single random quote, GET
-      /quotes/{count} returns N random quotes, and GET /quotes/search/{term} returns every quote that contains the given
-      term (case-insensitive).
-    humanURL: https://github.com/jamesseanwright/ron-swanson-quotes#ron-swanson-quotes-api
-    baseURL: https://ron-swanson-quotes.herokuapp.com/v2
-    tags:
-      - Entertainment
-      - Television
-      - Quotes
-      - REST
-    properties:
-      - type: Documentation
-        url: https://github.com/jamesseanwright/ron-swanson-quotes#ron-swanson-quotes-api
-      - type: OpenAPI
-        url: openapi/ron-swanson-quotes-openapi.yml
-      - type: APIReference
-        url: https://ron-swanson-quotes.herokuapp.com/v2/schema
-        title: Live OpenAPI 3.0 Schema Endpoint
-      - type: JSONSchema
-        url: json-schema/ron-swanson-quotes-quote-schema.json
-        title: Quote Schema
-      - type: JSONSchema
-        url: json-schema/ron-swanson-quotes-quote-list-schema.json
-        title: QuoteList Schema
-      - type: JSONSchema
-        url: json-schema/ron-swanson-quotes-rate-limit-error-schema.json
-        title: RateLimitError Schema
-      - type: JSONStructure
-        url: json-structure/ron-swanson-quotes-quote-structure.json
-        title: Quote JSON Structure
-      - type: JSONStructure
-        url: json-structure/ron-swanson-quotes-quote-list-structure.json
-        title: QuoteList JSON Structure
-      - type: JSONStructure
-        url: json-structure/ron-swanson-quotes-rate-limit-error-structure.json
-        title: RateLimitError JSON Structure
-      - type: Examples
-        url: examples/ron-swanson-quotes-quote-example.json
-        title: Quote Example
-      - type: Examples
-        url: examples/ron-swanson-quotes-quote-list-example.json
-        title: QuoteList Example
-      - type: Examples
-        url: examples/ron-swanson-quotes-rate-limit-error-example.json
-        title: RateLimitError Example
+- aid: ron-swanson-quotes:ron-swanson-quotes-quotes-api
+  name: Ron Swanson Quotes Quotes API
+  description: >-
+    Read-only operations that return one or more Ron Swanson quotes from the static quote corpus.
+  humanURL: https://github.com/jamesseanwright/ron-swanson-quotes#ron-swanson-quotes-api
+  baseURL: https://ron-swanson-quotes.herokuapp.com/v2
+  tags:
+  - Quotes
+  properties:
+  - type: OpenAPI
+    url: openapi/ron-swanson-quotes-quotes-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/jamesseanwright/ron-swanson-quotes#ron-swanson-quotes-api
+  - type: APIReference
+    url: https://ron-swanson-quotes.herokuapp.com/v2/schema
+  - type: JSONSchema
+    url: json-schema/ron-swanson-quotes-quote-schema.json
+  - type: JSONSchema
+    url: json-schema/ron-swanson-quotes-quote-list-schema.json
+  - type: JSONSchema
+    url: json-schema/ron-swanson-quotes-rate-limit-error-schema.json
+  - type: JSONStructure
+    url: json-structure/ron-swanson-quotes-quote-structure.json
+  - type: JSONStructure
+    url: json-structure/ron-swanson-quotes-quote-list-structure.json
+  - type: JSONStructure
+    url: json-structure/ron-swanson-quotes-rate-limit-error-structure.json
+  - type: Examples
+    url: examples/ron-swanson-quotes-quote-example.json
+  - type: Examples
+    url: examples/ron-swanson-quotes-quote-list-example.json
+  - type: Examples
+    url: examples/ron-swanson-quotes-rate-limit-error-example.json
 common:
   - type: AgenticAccess
     url: agentic-access/ron-swanson-quotes-agentic-access.yml
