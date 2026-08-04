@@ -1,0 +1,14 @@
+{
+  "provider": "ron-swanson-quotes",
+  "sources": [
+    "ron-swanson-quotes-quotes-api-openapi.yml"
+  ],
+  "outputs": [
+    "ron-swanson-quotes-quotes-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
