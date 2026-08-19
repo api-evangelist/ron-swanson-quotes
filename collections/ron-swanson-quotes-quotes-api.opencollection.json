@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ron Swanson Quotes API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Quotes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Ron Swanson Quotes Get Random Quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://ron-swanson-quotes.herokuapp.com/v2/quotes"
+          },
+          "docs": "Return a single random Ron Swanson quote wrapped in a one-element JSON array of strings. Equivalent to calling /quotes/1."
+        },
+        {
+          "info": {
+            "name": "Ron Swanson Quotes Get Random Quotes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://ron-swanson-quotes.herokuapp.com/v2/quotes/:count",
+            "params": [
+              {
+                "name": "count",
+                "value": "",
+                "type": "path",
+                "description": "Number of random quotes to return."
+              }
+            ]
+          },
+          "docs": "Return a JSON array of `count` random Ron Swanson quotes. The service does not document an upper bound on `count`; reasonable values are in the low tens. Negative or non-integer values yield a single quote."
+        },
+        {
+          "info": {
+            "name": "Ron Swanson Quotes Search Quotes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://ron-swanson-quotes.herokuapp.com/v2/quotes/search/:term",
+            "params": [
+              {
+                "name": "term",
+                "value": "",
+                "type": "path",
+                "description": "URL-encoded search term. Matched against the quote corpus without case sensitivity. Whole-word matching is not enforced - substrings also match."
+              }
+            ]
+          },
+          "docs": "Return every Ron Swanson quote whose text contains the URL-escaped `term` substring. Matching is case-insensitive. The response is an array of zero or more quote strings; an empty array is returned when no quotes match."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
