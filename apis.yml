@@ -1,4 +1,16 @@
 aid: ron-swanson-quotes
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: false
+  callable_host: true
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: unknown
@@ -92,6 +104,10 @@ apis:
   - type: Examples
     url: examples/ron-swanson-quotes-rate-limit-error-example.json
 common:
+  - type: IssueTracker
+    url: https://github.com/jamesseanwright/ron-swanson-quotes/issues
+  - type: Releases
+    url: https://github.com/jamesseanwright/ron-swanson-quotes/releases
   - type: AgenticAccess
     url: agentic-access/ron-swanson-quotes-agentic-access.yml
   - type: DomainSecurity
