@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Ron Swanson Quotes API
   version: 1.0.0
@@ -203,6 +203,11 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    Quote:
+      type: string
+      title: Quote
+      description: A single Ron Swanson quote represented as a plain UTF-8 string. Includes punctuation, smart quotes, and original capitalisation as delivered by the upstream corpus.
+      example: Give a man a fish and feed him for a day. Don't teach a man to fish, and feed yourself. He's a grown man. Fishing's not that hard.
     QuoteList:
       type: array
       title: QuoteList
@@ -228,8 +233,3 @@ components:
       required:
       - error
       - message
-    Quote:
-      type: string
-      title: Quote
-      description: A single Ron Swanson quote represented as a plain UTF-8 string. Includes punctuation, smart quotes, and original capitalisation as delivered by the upstream corpus.
-      example: Give a man a fish and feed him for a day. Don't teach a man to fish, and feed yourself. He's a grown man. Fishing's not that hard.
