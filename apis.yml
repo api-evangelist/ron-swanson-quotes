@@ -50,7 +50,7 @@ tags:
 - Television
 - Parks and Recreation
 - Quotes
-- Open-Source
+- Open Source
 - Public APIs
 - Node.js
 - TypeScript
@@ -67,6 +67,7 @@ tags_raw:
 - TypeScript
 - Heroku
 - REST
+- Open-Source
 apis:
 - aid: ron-swanson-quotes:ron-swanson-quotes-quotes-api
   name: Ron Swanson Quotes API
